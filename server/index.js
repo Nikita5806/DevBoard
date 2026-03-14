@@ -3,6 +3,7 @@ const mongoose = require('mongoose') //db he
 const cors = require('cors')//protect from diff origin
 const dotenv = require('dotenv')// stores sesitive files
 const authRoutes = require('./routes/auth.routes')
+const jobRoutes = require('./routes/job.routes')
 
 dotenv.config()
 
@@ -11,6 +12,8 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use('/api/auth', authRoutes)
+app.use('/api/jobs', jobRoutes)
+
 
 
 app.get('/', (req, res) => {
