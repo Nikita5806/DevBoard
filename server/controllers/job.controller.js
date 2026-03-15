@@ -1,4 +1,4 @@
-const Job = require('../models/job.js')
+const Job = require('../models/Job')
 
 // ADD JOB
 const addJob = async (req, res) => {
@@ -37,13 +37,15 @@ const getJobs = async (req, res) => {
 }
 
 // UPDATE JOB
-const { company, role, status, notes, appliedDate } = req.body
+const updateJob = async (req, res) => {
+  try {
+    const { company, role, status, notes, appliedDate } = req.body
 
-const job = await Job.findOneAndUpdate(
-  { _id: req.params.id, userId: req.user.id },
-  { company, role, status, notes, appliedDate },
-  { new: true }
-)
+    const job = await Job.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.id },
+      { company, role, status, notes, appliedDate },
+      { returnDocument: 'after' }
+    )
 
     if (!job) {
       return res.status(404).json({ message: 'Job not found' })
