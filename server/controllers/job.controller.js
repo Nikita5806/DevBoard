@@ -37,13 +37,13 @@ const getJobs = async (req, res) => {
 }
 
 // UPDATE JOB
-const updateJob = async (req, res) => {
-  try {
-    const job = await Job.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user.id },
-      req.body,
-      { new: true }
-    )
+const { company, role, status, notes, appliedDate } = req.body
+
+const job = await Job.findOneAndUpdate(
+  { _id: req.params.id, userId: req.user.id },
+  { company, role, status, notes, appliedDate },
+  { new: true }
+)
 
     if (!job) {
       return res.status(404).json({ message: 'Job not found' })
